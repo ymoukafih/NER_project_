@@ -7,13 +7,28 @@ Original file is located at
     https://colab.research.google.com/drive/1i8XnwnrqnJudmmnWPgp79KIEGfA7dvBY
 """
 
-import os
+from __future__ import absolute_import, division, print_function
+
+import argparse
+import csv
+import json
 import logging
-
+import os
+import random
+import sys
+import sklearn
+import numpy as np
 import torch
-from torch.utils.data import TensorDataset
+import torch.nn as nn
+import torch.nn.functional as F
+from pytorch_transformers import AdamW, WarmupLinearSchedule
+from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
+from seqeval.metrics import classification_report, f1_score, accuracy_score
+from tqdm import tqdm, trange
+from fairseq.models.roberta import XLMRModel
+from TorchCRF import CRF
 
-!git clone https://github.com/ymoukafih/low-resource-seq-labeling.git
+
 
 class InputExample(object):
     def __init__(self, guid, text_a, text_b=None, label=None):
@@ -244,14 +259,6 @@ def create_clf_dataset(features):
     return TensorDataset(
         all_input_ids, all_label_ids)
 
-from torch.utils.data import SequentialSampler, DataLoader
-from tqdm import tqdm
-from seqeval.metrics import f1_score, classification_report, accuracy_score
-import sklearn
-import torch
-import torch.nn.functional as F
-import numpy as np
-
 def evaluate_model_seq_labeling(model, eval_dataset, label_list, batch_size, use_crf, device, pred=False):
      # Run prediction for full data
      eval_sampler = SequentialSampler(eval_dataset)
@@ -318,11 +325,6 @@ def evaluate_model_seq_labeling(model, eval_dataset, label_list, batch_size, use
 
 #!pip install fairseq
 #!pip install TorchCRF
-from fairseq.models.roberta import XLMRModel
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from TorchCRF import CRF
 
 class XLMRForTokenClassification(nn.Module):
 
@@ -412,34 +414,6 @@ class XLMRForTokenClassification(nn.Module):
         return tensor_ids.cpu().numpy().tolist()[1:-1]
 
 #!pip install pytorch_transformers
-from __future__ import absolute_import, division, print_function
-
-import argparse
-import csv
-import json
-import logging
-import os
-import random
-import sys
-
-import numpy as np
-import torch
-import torch.nn.functional as F
-from pytorch_transformers import AdamW, WarmupLinearSchedule
-from torch import nn
-from torch.utils.data import (DataLoader, RandomSampler, SequentialSampler,
-                              TensorDataset, ConcatDataset)
-
-from seqeval.metrics import classification_report
-from tqdm import tqdm as tqdm
-from tqdm import trange
-
-# Commented out IPython magic to ensure Python compatibility.
-!mkdir pretrained_models
-# %cd pretrained_models
-!wget https://dl.fbaipublicfiles.com/fairseq/models/xlmr.base.tar.gz
-!tar -xzvf xlmr.base.tar.gz
-# %cd ..
 
 #hyper-parameters
 
@@ -583,7 +557,7 @@ if do_train:
 
       if patience >= 10:
         print("No more patience. Existing")
-                break
+        break
 
       for g in optimizer.param_groups:
         g['lr'] = learning_rate
