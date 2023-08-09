@@ -435,11 +435,11 @@ from tqdm import tqdm as tqdm
 from tqdm import trange
 
 # Commented out IPython magic to ensure Python compatibility.
-!mkdir pretrained_models
+#!mkdir pretrained_models
 # %cd pretrained_models
-!wget https://dl.fbaipublicfiles.com/fairseq/models/xlmr.base.tar.gz
-!tar -xzvf xlmr.base.tar.gz
-# %cd ..
+#!wget https://dl.fbaipublicfiles.com/fairseq/models/xlmr.base.tar.gz
+#!tar -xzvf xlmr.base.tar.gz
+#%cd ..
 
 #hyper-parameters
 
