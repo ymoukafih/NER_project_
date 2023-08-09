@@ -583,7 +583,7 @@ if do_train:
 
       if patience >= 10:
         print("No more patience. Existing")
-                break
+        break
 
       for g in optimizer.param_groups:
         g['lr'] = learning_rate
