@@ -13,7 +13,7 @@ import logging
 import torch
 from torch.utils.data import TensorDataset
 
-!git clone https://github.com/ymoukafih/low-resource-seq-labeling.git
+#!git clone https://github.com/ymoukafih/low-resource-seq-labeling.git
 
 class InputExample(object):
     def __init__(self, guid, text_a, text_b=None, label=None):
