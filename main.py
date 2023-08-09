@@ -13,7 +13,7 @@ import logging
 import torch
 from torch.utils.data import TensorDataset
 
-!git clone https://github.com/ymoukafih/low-resource-seq-labeling.git
+git clone https://github.com/ymoukafih/low-resource-seq-labeling.git
 
 class InputExample(object):
     def __init__(self, guid, text_a, text_b=None, label=None):
@@ -435,11 +435,11 @@ from tqdm import tqdm as tqdm
 from tqdm import trange
 
 # Commented out IPython magic to ensure Python compatibility.
-!mkdir pretrained_models
-# %cd pretrained_models
-!wget https://dl.fbaipublicfiles.com/fairseq/models/xlmr.base.tar.gz
-!tar -xzvf xlmr.base.tar.gz
-# %cd ..
+mkdir pretrained_models
+d pretrained_models
+wget https://dl.fbaipublicfiles.com/fairseq/models/xlmr.base.tar.gz
+tar -xzvf xlmr.base.tar.gz
+cd ..
 
 #hyper-parameters
 
