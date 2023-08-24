@@ -20,6 +20,7 @@ from seqeval.metrics import classification_report, f1_score, accuracy_score
 from tqdm import tqdm, trange
 from fairseq.models.roberta import XLMRModel
 from TorchCRF import CRF
+from Training import evaluate_model_seq_labeling
 
 
 #load best/ saved model
